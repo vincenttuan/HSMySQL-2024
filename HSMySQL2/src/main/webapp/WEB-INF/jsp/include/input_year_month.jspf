@@ -1,0 +1,54 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<script>
+    //建立按鈕上一月、下一月功能
+    function previousMonth() {
+        var cyear = document.getElementById('year').value * 1;
+        var cmonth = document.getElementById('month').value * 1;
+        if (cmonth == 1) {
+            cyear = cyear - 1;
+            cmonth = 12;
+        } else {
+            cmonth = cmonth - 1;
+        }
+        document.getElementById('year').value = cyear * 1;
+        document.getElementById('month').value = cmonth * 1;
+        //輸入後自動執行查詢
+        document.getElementById('myForm').submit();
+    }
+
+    function nextMonth() {
+        var cyear = document.getElementById('year').value * 1;
+        var cmonth = document.getElementById('month').value * 1;
+        if (cmonth == 12) {
+            cyear = cyear + 1;
+            cmonth = 1;
+        } else {
+            cmonth = cmonth + 1;
+        }
+        document.getElementById('year').value = cyear * 1;
+        document.getElementById('month').value = cmonth * 1;
+        //輸入後自動執行查詢
+        document.getElementById('myForm').submit();
+    }
+    
+    //控制月輸入框不可大於12及小於1
+    function checkMonthValue(tag) {
+        if(tag.value > 12) {
+            tag.value = 12;
+        } else if(tag.value < 1){
+            tag.value = 1;
+        }
+    }
+    
+    //控制年輸入框不可小於2020
+    function checkYearValue(tag) {
+        if(tag.value < 2020) {
+            tag.value = 2020;
+        }
+    }
+</script>
+年：<input type="number" id="year" name="year" value="${year}" ${ readonly } onchange="checkYearValue(this)" />
+月：<input type="number" id="month" name="month" value="${month}" ${ readonly } onchange="checkMonthValue(this)" />
+<button id="previousMonthBtn" type="button" class="pure-button pure-button-primary" onclick="previousMonth()">上一月</button>
+<button id="nextMonthBtn" type="button" class="pure-button pure-button-primary" onclick="nextMonth()">下一月</button>

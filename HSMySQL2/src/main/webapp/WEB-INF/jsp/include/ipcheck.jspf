@@ -1,0 +1,5 @@
+<%-- any content can be specified here e.g.: --%>
+<%--<!--?t=<%=new Date().getTime() %> 用時間標記讓瀏覽器認為是不同的檔案，強制更新-->--%>
+<%@page import="java.util.Date"%>
+<%@ page pageEncoding="UTF-8" %>
+<script src="${pageContext.servletContext.contextPath}/js/ipcheck.js?t=<%=new Date().getTime() %>"></script>

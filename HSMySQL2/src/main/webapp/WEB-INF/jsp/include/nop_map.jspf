@@ -1,0 +1,52 @@
+<%@ page import="java.util.LinkedHashMap"%>
+<%@ page import="java.util.Map"%>
+<%@ page pageEncoding="UTF-8" %>
+<%
+    Map<String[], String[][]> nopMap = new LinkedHashMap<>();
+    nopMap.put(new String[]{"公司", "#FFF9BC", "101"}, new String[][]{
+        {"早班", "nop_co1", "nopCo1"},
+        {"午班", "nop_co2", "nopCo2"},
+        {"晚班", "nop_co3", "nopCo3"},
+        {"值早", "nop_co4", "nopCo4"},
+        {"值午", "nop_co5", "nopCo5"},
+        {"值晚", "nop_co6", "nopCo6"},
+        {"假早", "nop_co7", "nopCo7"},
+        {"假午", "nop_co8", "nopCo8"},
+        {"假晚", "nop_co9", "nopCo9"},
+    });
+    
+    nopMap.put(new String[]{"診所", "#FFD2F1", "201"}, new String[][]{
+        {"早班早段", "nop_ho1", "nopHo1"},
+        {"早班午段", "nop_ho2", "nopHo2"},
+        {"晚班午段", "nop_ho3", "nopHo3"},
+        {"晚班晚段", "nop_ho4", "nopHo4"},
+        {"早晚早段", "nop_ho5", "nopHo5"},
+        {"早晚晚段", "nop_ho6", "nopHo6"},
+        {"六早早", "nop_ho7", "nopHo7"},
+        {"六早午", "nop_ho8", "nopHo8"},
+        {"六晚午", "nop_ho9", "nopHo9"},
+        {"六晚晚", "nop_ho10", "nopHo10"},
+        {"六早晚早", "nop_ho11", "nopHo11"},
+        {"六早晚晚", "nop_ho12", "nopHo12"},
+    });
+    
+    nopMap.put(new String[]{"藥局", "#D2FFE3", "301"}, new String[][]{
+        {"早班早段", "nop_ph1", "nopPh1"},
+        {"早班午段", "nop_ph2", "nopPh2"},
+        {"晚班午段", "nop_ph3", "nopPh3"},
+        {"晚班晚段", "nop_ph4", "nopPh4"},
+        {"早晚早段", "nop_ph5", "nopPh5"},
+        {"早晚晚段", "nop_ph6", "nopPh6"},
+        {"六早早", "nop_ph7", "nopPh7"},
+        {"六早午", "nop_ph8", "nopPh8"},
+        {"六晚午", "nop_ph9", "nopPh9"},
+        {"六晚晚", "nop_ph10", "nopPh10"},
+        {"六早晚早", "nop_ph11", "nopPh11"},
+        {"六早晚晚", "nop_ph12", "nopPh12"},
+    });
+    nopMap.put(new String[]{"工廠", "#D2E8FF", "401"}, new String[][]{
+        {"早班早段", "nop_fa1", "nopFa1"},
+        {"早班午段", "nop_fa2", "nopFa2"},
+    });
+    pageContext.setAttribute("nopMap", nopMap, PageContext.PAGE_SCOPE);
+%>

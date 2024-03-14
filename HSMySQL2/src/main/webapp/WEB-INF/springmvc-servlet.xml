@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--下面是使用到元件的API連結--> 
+<!--xsi:schemaLocation：
+使用標籤:標籤引擎名稱
+標籤引擎 對應引擎名稱的API連結網址-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+        
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+          http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+          http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+          http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+          http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+         
+    
+    
+    <!--spring管理物件：要求掃描可被spring管理的原件-->
+    <!--上面第6行的變數名稱是context，所以下面標籤也要用context-->
+    <!--base-package="com.hs.mvc.controller" 也可以只下 base-package="com.hs.mvc"，表示在mvc底下會全部被管理-->
+    <!-- <context:component-scan base-package="com.hs"/> 如果這樣下就是讓spring全掃-->
+    <context:component-scan base-package="com.hs.mvc.controller"/>
+    <context:component-scan base-package="com.hs.mvc.service"/>
+    <context:component-scan base-package="com.hs.mvc.repository"/>
+    <context:component-scan base-package="com.hs.mvc.validator"/>
+    <context:component-scan base-package="com.hs.filter"/>
+    <context:component-scan base-package="com.hs.listener"/>
+    
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basename" value="/WEB-INF/resource/errorMessages" />
+    </bean>
+    
+    <!-- 自定converter與formatter -->
+    <bean id="conversionService" 
+          class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="formatters">
+            <set> <!-- 透過@註釋配置 --></set>
+        </property>
+    </bean>
+    <mvc:annotation-driven conversion-service="conversionService" />
+
+    <!--定義 View(jsp page) 的路徑-->
+    <!--並且幫路徑名稱加上前置詞prefix及後置詞suffix-->
+    <!--所以在ClockOnController要回傳"/WEB-INF/jsp/clock_on.jsp"的路徑名稱，只要寫clock_on，不用再加前後置詞-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+          id="internalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsp/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
+    
+    <!--料庫配置-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="com.mysql.cj.jdbc.Driver" />
+        
+        <!--針對單機資料庫操作，因為目前對WEB而言，DB在同一單機，所以用這個Beaude即可-->
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/hs?zeroDateTimeBehavior=convertToNull&amp;serverTimezone=Asia/Taipei&amp;characterEncoding=utf-8&amp;useUnicode=true" />
+        <property name="user" value="root" />
+        <property name="password" value="12345678" />
+        
+        <!--針對線上資料庫操作-->
+<!--        <property name="jdbcUrl" value="jdbc:mysql://192.168.1.114:3306/hs?zeroDateTimeBehavior=convertToNull&amp;serverTimezone=Asia/Taipei&amp;characterEncoding=utf-8&amp;useUnicode=true" />
+        <property name="user" value="remote" />
+        <property name="password" value="12345678" />-->
+        
+        <property name="maxConnectionAge" value="3600" />
+        <property name="maxIdleTimeExcessConnections" value="60" />
+        <property name="debugUnreturnedConnectionStackTraces" value="true" />
+    </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    
+    <!-- Upload 上傳文件 -->
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+          p:defaultEncoding="UTF-8"
+          p:maxUploadSize="1000000"/>
+
+    
+</beans>
+

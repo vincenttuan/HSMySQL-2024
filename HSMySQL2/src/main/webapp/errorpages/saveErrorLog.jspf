@@ -1,0 +1,16 @@
+<%-- 錯誤訊息擷取include code --%>
+<%@page import="com.hs.mvc.repository.ErrorLogDao"%>
+<%@page import="org.springframework.web.context.WebApplicationContext"%>
+<%@ page pageEncoding="UTF-8" %>
+<jsp:directive.page import="org.springframework.web.context.WebApplicationContext"/>
+<%
+    WebApplicationContext context = (WebApplicationContext)this.getServletContext().getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE); 
+    // out.println(context);    //測試印出頁面錯誤物件資訊
+    ErrorLogDao dao = (ErrorLogDao)context.getBean("errorLogDao");
+    String request_uri = pageContext.getErrorData().getRequestURI();
+    String content = exception + "";
+    int error_code = response.getStatus();
+    String error_exception = "";
+    dao.saveErrorLog(request_uri, content, error_code, error_exception);
+%>
+

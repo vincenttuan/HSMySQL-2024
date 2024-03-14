@@ -1,0 +1,30 @@
+<%@page import="java.util.Optional"%>
+<%@page import="java.util.stream.Stream"%>
+<%@page import="java.util.Map.Entry"%>
+<%@page import="com.hs.mvc.entity.Employee"%>
+<%@ page import="java.util.LinkedHashMap"%>
+<%@ page import="java.util.Map"%>
+<%@ page pageEncoding="UTF-8" %>
+<%--@ include file="nop_map.jspf"  --%>
+<%
+    Map<String[], String[][]> nopMap = (Map<String[], String[][]>)pageContext.getAttribute("nopMap", PageContext.REQUEST_SCOPE);
+    
+    Employee employee = (Employee)session.getAttribute("employee");
+    //out.print(employee);
+    
+    Entry<String[], String[][]> entry = null;
+    
+    Optional<Entry<String[], String[][]>> o2 = nopMap.entrySet().stream().filter(e -> e.getKey()[2].equals(employee.getDeptId2()+"")).findAny();
+    Optional<Entry<String[], String[][]>> o1 = nopMap.entrySet().stream().filter(e -> e.getKey()[2].equals(employee.getDeptId1()+"")).findAny();
+    
+    if(o2.isPresent()) {
+        entry = o2.get();
+    } else {
+        entry = o1.get();
+    }
+    
+    nopMap = new LinkedHashMap<>();
+    nopMap.put(entry.getKey(), entry.getValue());
+    //out.print(nopMap);
+    pageContext.setAttribute("nopMap", nopMap, PageContext.PAGE_SCOPE);
+%>
