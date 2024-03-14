@@ -11,7 +11,7 @@ public interface GPSRepository {
 	// 根據 id 查詢 GPS
 	GPS getGpsById(Integer id);
 	// 根據 location 查詢 GPS
-	GPS getGpsByLocation(String location);
+	GPS getGpsByLocationName(String locationName);
 	// 新增 GPS
 	Boolean addGPS(GPS gps);
 	// 修改 GPS

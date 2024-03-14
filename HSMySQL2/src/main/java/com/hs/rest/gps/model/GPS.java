@@ -13,6 +13,8 @@ public class GPS {
 	private Integer id;
 	private Double latitude;
 	private Double longitude;
+	private Integer meter;
 	private String location;
+	private String locationName;
 	
 }
