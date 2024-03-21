@@ -14,7 +14,7 @@ public class GPS {
 	private Double latitude;
 	private Double longitude;
 	private Integer meter;
-	private String location;
-	private String locationName;
+	private String location; // 公司地址
+	private String locationName; // 公司地址單位名稱
 	
 }

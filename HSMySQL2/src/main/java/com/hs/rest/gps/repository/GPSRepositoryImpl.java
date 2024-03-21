@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.hs.rest.gps.model.GPS;
 
+//@Repository("GPSRepositoryImpl")
 @Repository
 public class GPSRepositoryImpl implements GPSRepository {
 	
