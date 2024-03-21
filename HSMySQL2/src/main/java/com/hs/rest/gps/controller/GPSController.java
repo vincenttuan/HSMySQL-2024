@@ -3,7 +3,9 @@ package com.hs.rest.gps.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,7 +38,18 @@ public class GPSController {
 	
 	@GetMapping
 	public List<GPS> findAllGps() {
-		return gpsService.findAllGps();
+		List<GPS> gpsList = gpsService.findAllGps();
+		return gpsList;
+	}
+	
+	// 刪除
+	// 例如: 網址.../gps/1 <- 刪除 id = 1 的紀錄
+	// 例如: 網址.../gps/3 <- 刪除 id = 3 的紀錄
+	// 例如: 網址.../gps/5 <- 刪除 id = 5 的紀錄
+	@DeleteMapping("/{id}")
+	public Boolean deleteGps(@PathVariable("id") Integer id) {
+		Boolean status = gpsService.deleteGps(id);
+		return status;
 	}
 	
 	

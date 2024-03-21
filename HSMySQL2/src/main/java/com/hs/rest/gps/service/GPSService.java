@@ -31,6 +31,13 @@ public class GPSService {
 	}
 	
 	public List<GPS> findAllGps() {
-		return gpsRepository.findAllGps();
+		List<GPS> gpsList = gpsRepository.findAllGps();
+		return gpsList;
 	}
+	
+	public Boolean deleteGps(Integer id) {
+		Boolean status = gpsRepository.deleteGPSById(id);
+		return status;
+	}
+	
 }
