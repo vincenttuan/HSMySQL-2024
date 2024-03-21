@@ -1,5 +1,7 @@
 package com.hs.rest.gps.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,5 +28,9 @@ public class GPSService {
 		// 將 GPS 物件傳送給 gpsRepository.addGPS 去新增
 		Boolean status = gpsRepository.addGPS(gps);
 		return status;
+	}
+	
+	public List<GPS> findAllGps() {
+		return gpsRepository.findAllGps();
 	}
 }
