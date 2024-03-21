@@ -23,6 +23,7 @@ public class GPSService {
 		gps.setMeter(meter);
 		gps.setLongitude(longitude);
 		gps.setLocationName(locationName);
+		// 將 GPS 物件傳送給 gpsRepository.addGPS 去新增
 		Boolean status = gpsRepository.addGPS(gps);
 		return status;
 	}
