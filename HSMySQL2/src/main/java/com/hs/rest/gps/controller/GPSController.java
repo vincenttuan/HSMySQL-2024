@@ -1,6 +1,9 @@
 package com.hs.rest.gps.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hs.rest.gps.model.po.GPS;
+import com.hs.rest.gps.model.response.ApiResponse;
 import com.hs.rest.gps.service.GPSService;
 
 @RestController
@@ -21,19 +25,37 @@ public class GPSController {
 	@Autowired
 	private GPSService gpsService;
 	
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss E");
+	
+	// 取得現在時間
+	private String getNow() {
+		return sdf.format(new Date());
+	}
+	
 	@GetMapping
 	// 多筆查詢 http://localhost:8080/HSMySQL2/mvc/gps
-	public List<GPS> queryAllGps() {
+	public ApiResponse queryAllGps() {
 		List<GPS> gpsList = gpsService.queryAllGps();
-		return gpsList;
+		// 建立回應物件
+		if(gpsList.size() == 0) {
+			ApiResponse apiResponse = new ApiResponse(false, "無資料", getNow(), null);
+			return apiResponse;
+		}
+		ApiResponse apiResponse = new ApiResponse(true, "多筆查詢成功", getNow(), gpsList);
+		return apiResponse;
 	}
 	
 	@GetMapping("/{id}")
 	// 單筆查詢 http://localhost:8080/HSMySQL2/mvc/gps/1
 	// 單筆查詢 http://localhost:8080/HSMySQL2/mvc/gps/3
-	public GPS getGpsById(@PathVariable("id") Integer id) {
+	public ApiResponse getGpsById(@PathVariable("id") Integer id) {
 		GPS gps = gpsService.getGpsById(id);
-		return gps;
+		if(gps == null) {
+			ApiResponse apiResponse = new ApiResponse(false, "無資料", getNow(), null);
+			return apiResponse;
+		}
+		ApiResponse apiResponse = new ApiResponse(true, "單筆查詢成功", getNow(), gps);
+		return apiResponse;
 	}
 	
 	// GPS 的 CRUD
@@ -61,6 +83,7 @@ public class GPSController {
 		Boolean status = gpsService.deleteGps(id);
 		return status;
 	}
+	
 	
 	
 }
