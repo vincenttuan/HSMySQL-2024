@@ -25,24 +25,15 @@ public class GPSController {
 	@Autowired
 	private GPSService gpsService;
 	
-	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss E");
-	
-	// 取得現在時間
-	private String getNow() {
-		return sdf.format(new Date());
-	}
-	
 	@GetMapping
 	// 多筆查詢 http://localhost:8080/HSMySQL2/mvc/gps
 	public ApiResponse queryAllGps() {
 		List<GPS> gpsList = gpsService.queryAllGps();
 		// 建立回應物件
 		if(gpsList.size() == 0) {
-			ApiResponse apiResponse = new ApiResponse(false, "無資料", getNow(), null);
-			return apiResponse;
+			return new ApiResponse(false, "無資料", null);
 		}
-		ApiResponse apiResponse = new ApiResponse(true, "多筆查詢成功", getNow(), gpsList);
-		return apiResponse;
+		return new ApiResponse(true, "多筆查詢成功", gpsList);
 	}
 	
 	@GetMapping("/{id}")
@@ -51,16 +42,14 @@ public class GPSController {
 	public ApiResponse getGpsById(@PathVariable("id") Integer id) {
 		GPS gps = gpsService.getGpsById(id);
 		if(gps == null) {
-			ApiResponse apiResponse = new ApiResponse(false, "無資料", getNow(), null);
-			return apiResponse;
+			return new ApiResponse(false, "無資料", null);
 		}
-		ApiResponse apiResponse = new ApiResponse(true, "單筆查詢成功", getNow(), gps);
-		return apiResponse;
+		return new ApiResponse(true, "單筆查詢成功", gps);
 	}
 	
 	// GPS 的 CRUD
 	@PostMapping
-	public Boolean addGPS(
+	public ApiResponse addGPS(
 			@RequestParam("latitude") Double latitude,
 			@RequestParam("longitude") Double longitude, 
 			@RequestParam("meter") Integer meter, 
@@ -70,8 +59,19 @@ public class GPSController {
 		// 檢查參數
 		// 略...
 		// 傳送參數給 gpsService, 讓 gpsService 幫我新增
-		Boolean status = gpsService.addGPS(latitude, longitude, meter, location, locationName);
-		return status;
+		ApiResponse apiResponse = null;
+		try {
+			Boolean status = gpsService.addGPS(latitude, longitude, meter, location, locationName);
+			if(status) {
+				apiResponse = new ApiResponse(true, "新增成功", status);
+			} else {
+				apiResponse = new ApiResponse(false, "新增失敗", null);
+			}
+		} catch (Exception e) {
+			apiResponse = new ApiResponse(false, "新增錯誤", e.getMessage());
+			e.printStackTrace();
+		}
+		return apiResponse;
 	}
 	
 	// 刪除
@@ -79,11 +79,15 @@ public class GPSController {
 	// 例如: 網址.../gps/3 <- 刪除 id = 3 的紀錄
 	// 例如: 網址.../gps/5 <- 刪除 id = 5 的紀錄
 	@DeleteMapping("/{id}")
-	public Boolean deleteGps(@PathVariable("id") Integer id) {
+	public ApiResponse deleteGps(@PathVariable("id") Integer id) {
 		Boolean status = gpsService.deleteGps(id);
-		return status;
+		ApiResponse apiResponse = null;
+		if(status) {
+			apiResponse = new ApiResponse(true, "刪除成功", status);
+		} else {
+			apiResponse = new ApiResponse(false, "刪除失敗", null);
+		}
+		return apiResponse;
 	}
-	
-	
 	
 }
