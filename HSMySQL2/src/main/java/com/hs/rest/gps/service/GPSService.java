@@ -15,6 +15,21 @@ public class GPSService {
 	//@Qualifier("GPSRepositoryImpl")
 	private GPSRepository gpsRepository;
 	
+	// 多筆查詢
+	public List<GPS> findAllGps() {
+		List<GPS> gpsList = gpsRepository.findAllGps();
+		return gpsList;
+	}
+	
+	// 單筆查詢
+	public GPS findById(Integer id) {
+		if(id == null) {
+			return null;
+		}
+		GPS gps = gpsRepository.getGpsById(id);
+		return gps;
+	}
+	
 	public Boolean addGPS(Double latitude,
 			Double longitude, Integer meter,
 			String location, String locationName) {
@@ -30,10 +45,7 @@ public class GPSService {
 		return status;
 	}
 	
-	public List<GPS> findAllGps() {
-		List<GPS> gpsList = gpsRepository.findAllGps();
-		return gpsList;
-	}
+	
 	
 	public Boolean deleteGps(Integer id) {
 		Boolean status = gpsRepository.deleteGPSById(id);

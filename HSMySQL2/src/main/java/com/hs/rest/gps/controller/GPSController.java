@@ -21,6 +21,21 @@ public class GPSController {
 	@Autowired
 	private GPSService gpsService;
 	
+	@GetMapping
+	// 多筆查詢 http://localhost:8080/HSMySQL2/mvc/gps
+	public List<GPS> findAllGps() {
+		List<GPS> gpsList = gpsService.findAllGps();
+		return gpsList;
+	}
+	
+	@GetMapping("/{id}")
+	// 單筆查詢 http://localhost:8080/HSMySQL2/mvc/gps/1
+	// 單筆查詢 http://localhost:8080/HSMySQL2/mvc/gps/3
+	public GPS getGpsById(@PathVariable("id") Integer id) {
+		GPS gps = gpsService.findById(id);
+		return gps;
+	}
+	
 	// GPS 的 CRUD
 	@PostMapping
 	public Boolean addGPS(
@@ -35,12 +50,6 @@ public class GPSController {
 		// 傳送參數給 gpsService, 讓 gpsService 幫我新增
 		Boolean status = gpsService.addGPS(latitude, longitude, meter, location, locationName);
 		return status;
-	}
-	
-	@GetMapping
-	public List<GPS> findAllGps() {
-		List<GPS> gpsList = gpsService.findAllGps();
-		return gpsList;
 	}
 	
 	// 刪除
