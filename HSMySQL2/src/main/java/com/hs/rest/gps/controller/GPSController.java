@@ -1,8 +1,13 @@
 package com.hs.rest.gps.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +34,7 @@ public class GPSController {
 			@RequestParam("meter") Integer meter, 
 			@RequestParam("location") String location,
 			@RequestParam("locationName") String locationName) {
+		
 		// 檢查參數
 		// 略...
 		// 傳送參數給 gpsService, 讓 gpsService 幫我新增
