@@ -1,4 +1,4 @@
-package com.hs.rest.gps.model;
+package com.hs.rest.gps.model.po;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

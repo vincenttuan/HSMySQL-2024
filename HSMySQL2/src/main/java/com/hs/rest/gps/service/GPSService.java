@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hs.rest.gps.model.GPS;
+import com.hs.rest.gps.model.po.GPS;
 import com.hs.rest.gps.repository.GPSRepository;
 
 @Service
@@ -16,13 +16,13 @@ public class GPSService {
 	private GPSRepository gpsRepository;
 	
 	// 多筆查詢
-	public List<GPS> findAllGps() {
-		List<GPS> gpsList = gpsRepository.findAllGps();
+	public List<GPS> queryAllGps() {
+		List<GPS> gpsList = gpsRepository.queryAllGps();
 		return gpsList;
 	}
 	
 	// 單筆查詢
-	public GPS findById(Integer id) {
+	public GPS getGpsById(Integer id) {
 		if(id == null) {
 			return null;
 		}

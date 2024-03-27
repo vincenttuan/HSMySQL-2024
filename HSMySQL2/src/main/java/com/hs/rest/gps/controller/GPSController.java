@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hs.rest.gps.model.GPS;
+import com.hs.rest.gps.model.po.GPS;
 import com.hs.rest.gps.service.GPSService;
 
 @RestController
@@ -23,8 +23,8 @@ public class GPSController {
 	
 	@GetMapping
 	// 多筆查詢 http://localhost:8080/HSMySQL2/mvc/gps
-	public List<GPS> findAllGps() {
-		List<GPS> gpsList = gpsService.findAllGps();
+	public List<GPS> queryAllGps() {
+		List<GPS> gpsList = gpsService.queryAllGps();
 		return gpsList;
 	}
 	
@@ -32,7 +32,7 @@ public class GPSController {
 	// 單筆查詢 http://localhost:8080/HSMySQL2/mvc/gps/1
 	// 單筆查詢 http://localhost:8080/HSMySQL2/mvc/gps/3
 	public GPS getGpsById(@PathVariable("id") Integer id) {
-		GPS gps = gpsService.findById(id);
+		GPS gps = gpsService.getGpsById(id);
 		return gps;
 	}
 	
