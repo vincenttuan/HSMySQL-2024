@@ -100,9 +100,9 @@ public class GPSRepositoryImpl implements GPSRepository {
 		// 添加 WHERE 條件
 		sqlBuilder.append(" WHERE id = ?");
 		params.add(gps.getId());
-
+		
 		// 執行更新操作
-		int rowCount = jdbcTemplate.update(sqlBuilder.toString(), params);
+		int rowCount = jdbcTemplate.update(sqlBuilder.toString(), params.toArray());
 		return rowCount > 0;
 	}
 

@@ -30,17 +30,7 @@ public class GPSService {
 		return gps;
 	}
 	
-	public Boolean addGPS(Double latitude,
-			Double longitude, Integer meter,
-			String location, String locationName) {
-		// 組裝 GPS 物件
-		GPS gps = new GPS();
-		gps.setLatitude(latitude);
-		gps.setLongitude(longitude);
-		gps.setMeter(meter);
-		gps.setLocation(location);
-		gps.setLocationName(locationName);
-		// 將 GPS 物件傳送給 gpsRepository.addGPS 去新增
+	public Boolean addGPS(GPS gps) {
 		Boolean status = gpsRepository.addGPS(gps);
 		return status;
 	}

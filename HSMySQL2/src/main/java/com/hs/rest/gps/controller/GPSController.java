@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -51,19 +52,13 @@ public class GPSController {
 	
 	// GPS 的 CRUD
 	@PostMapping
-	public ApiResponse addGPS(
-			@RequestParam("latitude") Double latitude,
-			@RequestParam("longitude") Double longitude, 
-			@RequestParam("meter") Integer meter, 
-			@RequestParam("location") String location,
-			@RequestParam("locationName") String locationName) {
-		
+	public ApiResponse addGPS(@RequestBody GPS gps) {
 		// 檢查參數
 		// 略...
 		// 傳送參數給 gpsService, 讓 gpsService 幫我新增
 		ApiResponse apiResponse = null;
 		try {
-			Boolean status = gpsService.addGPS(latitude, longitude, meter, location, locationName);
+			Boolean status = gpsService.addGPS(gps);
 			if(status) {
 				apiResponse = new ApiResponse(true, "新增成功", status);
 			} else {
@@ -78,16 +73,11 @@ public class GPSController {
 	
 	// 動態修改
 	// 例如: 網址.../gps/1 <- 修改 id = 1 的紀錄
-	@PatchMapping("{id}")
-	public ApiResponse updateGPS(@PathVariable("id") Integer id, 
-			@RequestParam(name = "latitude",     required = false) Double  latitude,
-			@RequestParam(name = "longitude",    required = false) Double  longitude, 
-			@RequestParam(name = "meter",        required = false) Integer meter, 
-			@RequestParam(name = "location",     required = false) String  location,
-			@RequestParam(name = "locationName", required = false) String  locationName) {
-		// 將 RequestParam 參數注入給 GPS 物件
-		// 因為 id 已經注入, 所以 service 就可以不用注入
-		GPS gps = new GPS(id, latitude, longitude, meter, location, locationName);
+	// 接收 json 參數資料
+	@PatchMapping("/{id}")
+	public ApiResponse updateGPS(@PathVariable("id") Integer id, @RequestBody GPS gps) {
+		// 注入 id (重要 !!!)
+		gps.setId(id);
 		Boolean status = gpsService.updateGPS(gps);
 		ApiResponse apiResponse = null;
 		if(status) {

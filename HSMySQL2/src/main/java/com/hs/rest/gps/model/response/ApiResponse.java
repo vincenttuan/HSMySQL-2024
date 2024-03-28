@@ -15,7 +15,7 @@ public class ApiResponse {
 	private String datetime = getNow();
 	private Object data;
 	
-	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss E");
+	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss E");
 	
 	public ApiResponse(Boolean status, String message, Object data) {
 		this.status = status;
