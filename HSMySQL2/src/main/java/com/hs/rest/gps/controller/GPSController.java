@@ -80,11 +80,11 @@ public class GPSController {
 	// 例如: 網址.../gps/1 <- 修改 id = 1 的紀錄
 	@PatchMapping("{id}")
 	public ApiResponse updateGPS(@PathVariable("id") Integer id, 
-			@RequestParam(name = "latitude", required = false) Double latitude,
-			@RequestParam(name = "longitude", required = false) Double longitude, 
-			@RequestParam(name = "meter", required = false) Integer meter, 
-			@RequestParam(name = "location", required = false) String location,
-			@RequestParam(name = "locationName", required = false) String locationName) {
+			@RequestParam(name = "latitude",     required = false) Double  latitude,
+			@RequestParam(name = "longitude",    required = false) Double  longitude, 
+			@RequestParam(name = "meter",        required = false) Integer meter, 
+			@RequestParam(name = "location",     required = false) String  location,
+			@RequestParam(name = "locationName", required = false) String  locationName) {
 		// 將 RequestParam 參數注入給 GPS 物件
 		// 因為 id 已經注入, 所以 service 就可以不用注入
 		GPS gps = new GPS(id, latitude, longitude, meter, location, locationName);
