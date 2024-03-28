@@ -1,5 +1,6 @@
 package com.hs.rest.gps.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +13,10 @@ import com.hs.rest.gps.model.po.GPS;
 //@Repository("GPSRepositoryImpl")
 @Repository
 public class GPSRepositoryImpl implements GPSRepository {
-	
+
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	
+
 	@Override
 	public List<GPS> queryAllGps() {
 		String sql = "select id, latitude, longitude, meter, location, location_name from gps";
@@ -48,15 +49,62 @@ public class GPSRepositoryImpl implements GPSRepository {
 	@Override
 	public Boolean addGPS(GPS gps) {
 		String sql = "insert into gps(latitude, longitude, meter, location, location_name) values (?, ?, ?, ?, ?)";
-		int rowcount = jdbcTemplate.update(sql, gps.getLatitude(), gps.getLongitude(), gps.getMeter(), gps.getLocation(), gps.getLocationName());
+		int rowcount = jdbcTemplate.update(sql, gps.getLatitude(), gps.getLongitude(), gps.getMeter(),
+				gps.getLocation(), gps.getLocationName());
 		return rowcount > 0;
 	}
 
+	// 動態生成 update sql,
+	// 以下是可能動態生成 sql 的範例:
+	// UPDATE gps SET latitude = ?, longitude = ? WHERE id = ?;
+	// UPDATE gps SET latitude = ?, longitude = ?, meter = ? WHERE id = ?;
+	// UPDATE gps SET meter = ? WHERE id = ?;
+	// UPDATE gps SET location = ?, location_name = ? WHERE id = ?;
+	// UPDATE gps SET latitude = ?, meter = ? WHERE id = ?;
+	
 	@Override
 	public Boolean updateGPS(GPS gps) {
-		String sql = "update gps set latitude=?, longitude=?, meter=?, location=?, location_name=? where id=?";
-		int rowcount = jdbcTemplate.update(sql, gps.getLatitude(), gps.getLongitude(), gps.getMeter(), gps.getLocation(), gps.getLocationName(), gps.getId());
-		return rowcount > 0;
+		StringBuilder sqlBuilder = new StringBuilder("UPDATE gps SET ");
+		List<Object> params = new ArrayList<>();
+
+		// 依次檢查每個字段是否為 null，並相應地構建 SQL 語句
+		if (gps.getLatitude() != null) {
+			sqlBuilder.append("latitude = ?, ");
+			params.add(gps.getLatitude());
+		}
+		if (gps.getLongitude() != null) {
+			sqlBuilder.append("longitude = ?, ");
+			params.add(gps.getLongitude());
+		}
+		if (gps.getMeter() != null) {
+			sqlBuilder.append("meter = ?, ");
+			params.add(gps.getMeter());
+		}
+		if (gps.getLocation() != null) {
+			sqlBuilder.append("location = ?, ");
+			params.add(gps.getLocation());
+		}
+		if (gps.getLocationName() != null) {
+			sqlBuilder.append("location_name = ?, ");
+			params.add(gps.getLocationName());
+		}
+
+		// 檢查是否有至少一個字段需要更新
+		if (params.isEmpty()) {
+			// 所有字段都是 null，不執行更新操作
+			return false;
+		}
+
+		// 移除最後的逗號和空格
+		sqlBuilder.setLength(sqlBuilder.length() - 2);
+
+		// 添加 WHERE 條件
+		sqlBuilder.append(" WHERE id = ?");
+		params.add(gps.getId());
+
+		// 執行更新操作
+		int rowCount = jdbcTemplate.update(sqlBuilder.toString(), params);
+		return rowCount > 0;
 	}
 
 	@Override
