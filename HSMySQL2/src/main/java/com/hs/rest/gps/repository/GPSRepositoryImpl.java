@@ -61,7 +61,6 @@ public class GPSRepositoryImpl implements GPSRepository {
 	// UPDATE gps SET meter = ? WHERE id = ?;
 	// UPDATE gps SET location = ?, location_name = ? WHERE id = ?;
 	// UPDATE gps SET latitude = ?, meter = ? WHERE id = ?;
-	
 	@Override
 	public Boolean updateGPS(GPS gps) {
 		StringBuilder sqlBuilder = new StringBuilder("UPDATE gps SET ");

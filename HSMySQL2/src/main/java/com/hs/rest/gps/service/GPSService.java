@@ -45,9 +45,14 @@ public class GPSService {
 		return status;
 	}
 	
+	// 因為 controller 傳來的 gps 物件不帶 id
+	// 所以必須將 id 設定給 gps。
+	public Boolean updateGPS(Integer id, GPS gps) {
+		gps.setId(id);
+		return gpsRepository.updateGPS(gps);
+	}
 	
-	
-	public Boolean deleteGps(Integer id) {
+	public Boolean deleteGPS(Integer id) {
 		Boolean status = gpsRepository.deleteGPSById(id);
 		return status;
 	}

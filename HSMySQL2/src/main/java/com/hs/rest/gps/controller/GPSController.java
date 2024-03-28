@@ -8,8 +8,10 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -74,13 +76,31 @@ public class GPSController {
 		return apiResponse;
 	}
 	
+	// 動態修改
+	// 例如: 網址.../gps/1 <- 修改 id = 1 的紀錄
+	// 要修改的資訊是 json 格式:
+	// {"meter": 20, "location":24.1234}
+	@PatchMapping("{id}")
+	public ApiResponse updateGPS(@PathVariable("id") Integer id, @RequestBody GPS gps) {
+		// Spring 會自動將上傳的 json 轉 GPS 物件
+		Boolean status = gpsService.updateGPS(id, gps);
+		ApiResponse apiResponse = null;
+		if(status) {
+			apiResponse = new ApiResponse(true, "修改成功", status);
+		} else {
+			apiResponse = new ApiResponse(false, "修改失敗", null);
+		}
+		return apiResponse;
+	}
+	
+	
 	// 刪除
 	// 例如: 網址.../gps/1 <- 刪除 id = 1 的紀錄
 	// 例如: 網址.../gps/3 <- 刪除 id = 3 的紀錄
 	// 例如: 網址.../gps/5 <- 刪除 id = 5 的紀錄
 	@DeleteMapping("/{id}")
-	public ApiResponse deleteGps(@PathVariable("id") Integer id) {
-		Boolean status = gpsService.deleteGps(id);
+	public ApiResponse deleteGPS(@PathVariable("id") Integer id) {
+		Boolean status = gpsService.deleteGPS(id);
 		ApiResponse apiResponse = null;
 		if(status) {
 			apiResponse = new ApiResponse(true, "刪除成功", status);
