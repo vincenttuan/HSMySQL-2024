@@ -78,12 +78,17 @@ public class GPSController {
 	
 	// 動態修改
 	// 例如: 網址.../gps/1 <- 修改 id = 1 的紀錄
-	// 要修改的資訊是 json 格式:
-	// {"meter": 20, "location":24.1234}
 	@PatchMapping("{id}")
-	public ApiResponse updateGPS(@PathVariable("id") Integer id, @RequestBody GPS gps) {
-		// Spring 會自動將上傳的 json 轉 GPS 物件
-		Boolean status = gpsService.updateGPS(id, gps);
+	public ApiResponse updateGPS(@PathVariable("id") Integer id, 
+			@RequestParam(name = "latitude", required = false) Double latitude,
+			@RequestParam(name = "longitude", required = false) Double longitude, 
+			@RequestParam(name = "meter", required = false) Integer meter, 
+			@RequestParam(name = "location", required = false) String location,
+			@RequestParam(name = "locationName", required = false) String locationName) {
+		// 將 RequestParam 參數注入給 GPS 物件
+		// 因為 id 已經注入, 所以 service 就可以不用注入
+		GPS gps = new GPS(id, latitude, longitude, meter, location, locationName);
+		Boolean status = gpsService.updateGPS(gps);
 		ApiResponse apiResponse = null;
 		if(status) {
 			apiResponse = new ApiResponse(true, "修改成功", status);
