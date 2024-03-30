@@ -50,6 +50,15 @@ public class GPSController {
 		return new ApiResponse(true, "單筆查詢成功", gps);
 	}
 	
+	@GetMapping("/distance")
+	// 接收前端傳來的緯經度(lat, lng)
+	// 單筆查詢 http://localhost:8080/HSMySQL2/mvc/gps/distance?lng=121.567&lat=24.123
+	public ApiResponse distance(@RequestParam Double lng, @RequestParam Double lat) {
+		
+		return new ApiResponse(true, "查詢成功", gps);
+	}
+	
+	
 	// GPS 的 CRUD
 	@PostMapping
 	public ApiResponse addGPS(@RequestBody GPS gps) {
