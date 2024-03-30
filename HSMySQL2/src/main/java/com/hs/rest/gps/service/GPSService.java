@@ -2,6 +2,7 @@ package com.hs.rest.gps.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,17 +48,18 @@ public class GPSService {
 		return status;
 	}
 	
-	public List<GPS> distance(Double lng, Double lat) {
-		List<GPS> gpsResult = new ArrayList<>(); // 存放距離符合的容器
+	public List<GPS> findGPSWithinDistance(Double lng, Double lat) {
+		List<GPS> matchingGPSList = new ArrayList<>(); // 存放距離符合的容器
 		
 		for(GPS gps : queryAllGps()) {
 			double distance = DistanceUtil.getDistance(gps.getLongitude(), gps.getLatitude(), lng, lat);
 			if(distance <= gps.getMeter()) { // 算出的距離 distance 是否小於設定的距離 meter
-				gpsResult.add(gps); // 存放到距離符合的容器
+				matchingGPSList.add(gps); // 存放到距離符合的容器
 			}
 		}
 		
-		return gpsResult;
+		return matchingGPSList;
 	}
+	
 	
 }
