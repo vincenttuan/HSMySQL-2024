@@ -39,26 +39,26 @@ public class GPSService {
 		return status;
 	}
 	
-	public Boolean updateGPS(GPS gps) {
+	public Boolean updateGps(GPS gps) {
 		return gpsRepository.updateGPS(gps);
 	}
 	
-	public Boolean deleteGPS(Integer id) {
+	public Boolean deleteGps(Integer id) {
 		Boolean status = gpsRepository.deleteGPSById(id);
 		return status;
 	}
 	
-	public List<GPS> findGPSWithinDistance(Double lng, Double lat) {
-		List<GPS> matchingGPSList = new ArrayList<>(); // 存放距離符合的容器
+	public List<GPS> findGpsWithinDistance(Double lng, Double lat) {
+		List<GPS> matchingGpsList = new ArrayList<>(); // 存放距離符合的容器
 		
 		for(GPS gps : queryAllGps()) {
 			double distance = DistanceUtil.getDistance(gps.getLongitude(), gps.getLatitude(), lng, lat);
 			if(distance <= gps.getMeter()) { // 算出的距離 distance 是否小於設定的距離 meter
-				matchingGPSList.add(gps); // 存放到距離符合的容器
+				matchingGpsList.add(gps); // 存放到距離符合的容器
 			}
 		}
 		
-		return matchingGPSList;
+		return matchingGpsList;
 	}
 	
 	

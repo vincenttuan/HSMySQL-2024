@@ -50,12 +50,16 @@ public class GPSController {
 		return new ApiResponse(true, "單筆查詢成功", gps);
 	}
 	
-	@GetMapping("/distance")
-	// 接收前端傳來的緯經度(lat, lng)
-	// 單筆查詢 http://localhost:8080/HSMySQL2/mvc/gps/distance?lng=121.567&lat=24.123
-	public ApiResponse distance(@RequestParam Double lng, @RequestParam Double lat) {
-		
-		return new ApiResponse(true, "查詢成功", gps);
+	@GetMapping("/findGpsWithinDistance")
+	// 接收前端傳來的經緯度(lng, lat)
+	// 單筆查詢 http://localhost:8080/HSMySQL2/mvc/gps/findGpsWithinDistance?lng=121.567&lat=24.123
+	public ApiResponse findGpsWithinDistance(@RequestParam Double lng, @RequestParam Double lat) {
+		// 透過 gpsService 查詢符合距離的 GPS 資料有哪些
+		List<GPS> matchingGpsList = gpsService.findGpsWithinDistance(lng, lat);
+		if(matchingGpsList.size() == 0) { // 若容器無 GPS 資料
+			return new ApiResponse(false, "無符合距離的 GPS 資料", null);
+		}
+		return new ApiResponse(true, "有符合距離的 GPS 資料", matchingGpsList);
 	}
 	
 	
