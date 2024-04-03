@@ -15,7 +15,12 @@ const loadHTML = async (url, containerId) => {
 };
 
 //-----------------------------------------------------------------------------------------------------
-// 等待 DOM 加載完成後再執行
+// 啟動點: 等待 DOM 加載完成後再執行
 document.addEventListener("DOMContentLoaded", async () => {
 	await loadHTML('gps.html', 'gps-container');
+	
+	await loadHTML('gps.html', 'gps-container');
+	
+	await loadHTML('gps.html', 'gps-container');
+	
 });
