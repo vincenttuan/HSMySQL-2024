@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -15,20 +16,27 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hs.rest.gps.model.po.GPS;
 import com.hs.rest.gps.model.response.ApiResponse;
 import com.hs.rest.gps.service.GPSService;
 
-@RestController
+@Controller
 @RequestMapping("/gps")
 public class GPSController {
 	
 	@Autowired
 	private GPSService gpsService;
 	
+	@GetMapping("/main_page")
+	public String main() {
+		return "rest";
+	}
+	
 	@GetMapping
+	@ResponseBody
 	// 多筆查詢 http://localhost:8080/HSMySQL2/mvc/gps
 	public ApiResponse queryAllGps() {
 		List<GPS> gpsList = gpsService.queryAllGps();
@@ -40,6 +48,7 @@ public class GPSController {
 	}
 	
 	@GetMapping("/{id}")
+	@ResponseBody
 	// 單筆查詢 http://localhost:8080/HSMySQL2/mvc/gps/1
 	// 單筆查詢 http://localhost:8080/HSMySQL2/mvc/gps/3
 	public ApiResponse getGpsById(@PathVariable("id") Integer id) {
@@ -51,6 +60,7 @@ public class GPSController {
 	}
 	
 	@GetMapping("/findGpsWithinDistance")
+	@ResponseBody
 	// 接收前端傳來的經緯度(lng, lat)
 	// 單筆查詢 http://localhost:8080/HSMySQL2/mvc/gps/findGpsWithinDistance?lng=121.567&lat=24.123
 	public ApiResponse findGpsWithinDistance(@RequestParam Double lng, @RequestParam Double lat) {
@@ -65,6 +75,7 @@ public class GPSController {
 	
 	// GPS 的 CRUD
 	@PostMapping
+	@ResponseBody
 	public ApiResponse addGPS(@RequestBody GPS gps) {
 		// 檢查參數
 		// 略...
@@ -88,6 +99,7 @@ public class GPSController {
 	// 例如: 網址.../gps/1 <- 修改 id = 1 的紀錄
 	// 接收 json 參數資料
 	@PatchMapping("/{id}")
+	@ResponseBody
 	public ApiResponse updateGPS(@PathVariable("id") Integer id, @RequestBody GPS gps) {
 		// 注入 id (重要 !!!)
 		gps.setId(id);
@@ -107,6 +119,7 @@ public class GPSController {
 	// 例如: 網址.../gps/3 <- 刪除 id = 3 的紀錄
 	// 例如: 網址.../gps/5 <- 刪除 id = 5 的紀錄
 	@DeleteMapping("/{id}")
+	@ResponseBody
 	public ApiResponse deleteGPS(@PathVariable("id") Integer id) {
 		Boolean status = gpsService.deleteGps(id);
 		ApiResponse apiResponse = null;

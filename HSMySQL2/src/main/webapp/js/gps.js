@@ -19,7 +19,7 @@ if ("geolocation" in navigator) {
 		console.log("使用者經度: " + userLongitude);
 
 		// 正確使用 userLatitude
-		const url = `/HSMySQL2/mvc/gps/findGpsWithinDistance?lng=${userLongitude}&lat=${userLatitude}`;
+		const url = `/HSMySQL/mvc/gps/findGpsWithinDistance?lng=${userLongitude}&lat=${userLatitude}`;
 		console.log(url);
 		// 使用 fetch 發送請求
 		fetch(url)
