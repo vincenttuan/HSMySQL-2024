@@ -2,6 +2,78 @@ const REMOTE_URL = '';
 
 const $ = (id) => document.getElementById(id);
 
+// 通用函數，用於檢查事件目標是否包含指定的類別，如果是則執行回調函數
+const handleEvent = async (event, className, callback) => {
+    if (event.target.classList.contains(className)) {
+		var itemId, productId, amount, customerId;
+		switch(className) {
+			case 'gps-add': // 新增GPS
+				await callback();
+				break;
+		}
+    }
+};
+// 新增GPS的函數
+const handleAddGPS = async () => {
+	
+	// 使用 Swal.fire
+	const result = await Swal.fire({
+	    title: '新增GPS',
+	    html:`
+	        <input id="gps-latitude-input" class="swal2-input" placeholder="請輸入緯度">
+	        <input id="gps-longitude-input" class="swal2-input" placeholder="請輸入經度">
+	        <input id="gps-location-input" class="swal2-input" placeholder="請輸入地址">
+	        <input id="gps-locationName-input" class="swal2-input" placeholder="請輸入單位名稱">
+	        <input id="gps-meter-input" type="number" class="swal2-input" placeholder="請輸入公尺">`,
+	    focusConfirm: false,
+	    preConfirm: () => {
+	        const latitude = $('gps-latitude-input').value;
+	        const longitude = $('gps-longitude-input').value;
+	        const location = $('gps-location-input').value;
+	        const locationName = $('gps-locationName-input').value;
+	        const meter = $('gps-meter-input').value;
+	        
+	        // 檢查輸入值，如果需要的話
+	        if (!latitude || !longitude || !location || !locationName || !meter) {
+	            Swal.showValidationMessage("所有欄位都是必填的");
+	            return false; // 阻止彈窗關閉
+	        }
+	
+	        return { latitude, longitude, location, locationName, meter };
+	    }
+	});
+	
+	if (result.value) {
+		console.log(result.value);
+	} else {
+	    console.log('No values');
+	    return;
+	}
+	
+	const fullUrl = `${REMOTE_URL}../mvc/gps`;
+	try {
+		const response = await fetch(fullUrl, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				latitude: result.value.latitude,
+				longitude: result.value.longitude,
+				location: result.value.location,
+				locationName: result.value.locationName,
+				meter: result.value.meter
+			})
+		});
+		if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+		const { status, message } = await response.json();
+		if (!status) throw new Error(`Failed to add customer: ${message}`);
+		// 重新渲染GPS列表
+		fetchAndRenderData('../mvc/gps', 'gps-body', renderGPS);
+	} catch (error) {
+		console.error('Error adding customer:', error);
+	}
+};
 
 // 渲染GPS列表的函數
 const renderGPS = ({ id, latitude, longitude, location, locationName, meter }) => `
@@ -56,4 +128,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 	
 	fetchAndRenderData('../mvc/gps', 'gps-body', renderGPS);
 	
+	$("gps-add-link").addEventListener("click", async (event) => {
+		event.preventDefault();  // 取消默認動作，這裡是阻止超鏈接跳轉
+		console.log(event.target);
+		await handleEvent(event, 'gps-add', handleAddGPS);
+	});
 });
