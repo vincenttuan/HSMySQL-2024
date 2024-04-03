@@ -23,7 +23,14 @@ public abstract class BaseFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        doFilter((HttpServletRequest) request, (HttpServletResponse) response, chain);
+    	String userAgent = ((HttpServletRequest)request).getHeader("User-Agent");
+    	String clientIP = ((HttpServletRequest)request).getRemoteAddr();
+    	String realIP = ((HttpServletRequest)request).getHeader("x-forwarded-for");
+    	System.out.printf("client 端連線設備: %s%n", userAgent);
+    	System.out.printf("client 端 clientIP: %s%n", clientIP);
+    	System.out.printf("client 端 realIP: %s%n", realIP);
+    	
+    	doFilter((HttpServletRequest) request, (HttpServletResponse) response, chain);
     }
     
     protected abstract void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException;

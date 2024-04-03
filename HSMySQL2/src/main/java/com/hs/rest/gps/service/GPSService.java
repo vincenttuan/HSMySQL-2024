@@ -56,8 +56,9 @@ public class GPSService {
 			if(distance <= gps.getMeter()) { // 算出的距離 distance 是否小於設定的距離 meter
 				matchingGpsList.add(gps); // 存放到距離符合的容器
 			}
+			// log
+			System.out.printf("(%s, %s) (%s, %s) %.2f公尺 <= %s公尺%n", gps.getLongitude(), gps.getLatitude(), lng, lat, distance, gps.getMeter());
 		}
-		
 		return matchingGpsList;
 	}
 	

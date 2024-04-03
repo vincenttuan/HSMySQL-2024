@@ -91,7 +91,7 @@ public class GPSController {
 	public ApiResponse updateGPS(@PathVariable("id") Integer id, @RequestBody GPS gps) {
 		// 注入 id (重要 !!!)
 		gps.setId(id);
-		Boolean status = gpsService.updateGPS(gps);
+		Boolean status = gpsService.updateGps(gps);
 		ApiResponse apiResponse = null;
 		if(status) {
 			apiResponse = new ApiResponse(true, "修改成功", status);
@@ -108,7 +108,7 @@ public class GPSController {
 	// 例如: 網址.../gps/5 <- 刪除 id = 5 的紀錄
 	@DeleteMapping("/{id}")
 	public ApiResponse deleteGPS(@PathVariable("id") Integer id) {
-		Boolean status = gpsService.deleteGPS(id);
+		Boolean status = gpsService.deleteGps(id);
 		ApiResponse apiResponse = null;
 		if(status) {
 			apiResponse = new ApiResponse(true, "刪除成功", status);
