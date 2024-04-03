@@ -5,7 +5,6 @@ const $ = (id) => document.getElementById(id);
 // 通用函數，用於檢查事件目標是否包含指定的類別，如果是則執行回調函數
 const handleEvent = async (event, className, callback) => {
     if (event.target.classList.contains(className)) {
-		var itemId, productId, amount, customerId;
 		switch(className) {
 			case 'gps-add': // 新增GPS
 				await callback();
@@ -124,10 +123,13 @@ const loadHTML = async (url, containerId) => {
 //-----------------------------------------------------------------------------------------------------
 // 啟動點: 等待 DOM 加載完成後再執行
 document.addEventListener("DOMContentLoaded", async () => {
+	// 加載 GPS HTML 內容
 	await loadHTML('gps.html', 'gps-container');
 	
+	// 加載 GPS 列表資料
 	fetchAndRenderData('../mvc/gps', 'gps-body', renderGPS);
 	
+	// GPS 新增按鈕點擊事件
 	$("gps-add-link").addEventListener("click", async (event) => {
 		event.preventDefault();  // 取消默認動作，這裡是阻止超鏈接跳轉
 		console.log(event.target);
