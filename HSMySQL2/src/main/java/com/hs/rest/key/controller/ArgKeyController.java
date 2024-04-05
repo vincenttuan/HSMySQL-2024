@@ -56,6 +56,7 @@ public class ArgKeyController {
 	@PatchMapping
 	// 使用範例: /argkey
 	public ApiResponse updateKey(@RequestBody ArgKey argKey) {
+		// 取得 key
 		String key = argKey.getStrArg1();
 		Boolean result = argKeyService.updateKey(key);
 		if (result) {
