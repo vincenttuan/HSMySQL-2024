@@ -24,7 +24,7 @@ public class ArgKeyService {
 	}
 	
 	public Boolean update(ArgKey argKey) {
-		if (argKey == null) {
+		if (argKey == null || argKey.getStrArg1() == null || argKey.getStrArg1().isEmpty()) {
 			return false;
 		}
 		return argKeyRepository.update(argKey);
