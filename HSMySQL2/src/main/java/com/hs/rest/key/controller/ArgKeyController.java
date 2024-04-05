@@ -35,7 +35,7 @@ public class ArgKeyController {
         if (argKey != null) {
             return new ApiResponse(true, "取得成功", argKey);
         } else {
-            return new ApiResponse(false, "取得失敗", argKey);
+            return new ApiResponse(false, "取得失敗", null);
         }
     }
 	
