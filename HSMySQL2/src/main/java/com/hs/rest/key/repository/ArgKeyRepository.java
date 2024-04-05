@@ -8,5 +8,5 @@ public interface ArgKeyRepository {
 	// 取得資料 id 固定是 7
 	public ArgKey getArgKey();
 	// 更新資料
-	public void update(ArgKey argKey);
+	public Boolean update(ArgKey argKey);
 }

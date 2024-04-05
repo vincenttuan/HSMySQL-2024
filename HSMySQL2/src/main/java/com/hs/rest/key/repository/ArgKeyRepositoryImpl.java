@@ -33,9 +33,11 @@ public class ArgKeyRepositoryImpl implements ArgKeyRepository {
 	}
 
 	@Override
-	public void update(ArgKey argKey) {
-		// TODO Auto-generated method stub
-		
+	public Boolean update(ArgKey argKey) {
+		Integer id = ArgKey.id;
+		String sql = "update args set name = ?, str_arg1 = ?, memo = ? where id = ?";
+		int rowcount = jdbcTemplate.update(sql, argKey.getName(), argKey.getStrArg1(), argKey.getMemo(), id);
+		return rowcount > 0;
 	}
 
 	
