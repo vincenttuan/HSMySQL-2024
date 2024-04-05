@@ -40,6 +40,14 @@ public class ArgKeyRepositoryImpl implements ArgKeyRepository {
 		return rowcount > 0;
 	}
 
+	@Override
+	public Boolean updateKey(String newKey) {
+		Integer id = ArgKey.id;
+		String sql = "update args set str_arg1 = ? where id = ?";
+		int rowcount = jdbcTemplate.update(sql, newKey, id);
+		return rowcount > 0;
+	}
+
 	
 
 }

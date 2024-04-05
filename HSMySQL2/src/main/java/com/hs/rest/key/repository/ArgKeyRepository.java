@@ -9,4 +9,6 @@ public interface ArgKeyRepository {
 	public ArgKey getArgKey();
 	// 更新資料
 	public Boolean update(ArgKey argKey);
+	// 只更新 key
+	public Boolean updateKey(String newKey);
 }
