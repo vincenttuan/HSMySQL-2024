@@ -2,6 +2,8 @@ package com.hs.rest.key.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,4 +41,14 @@ public class ArgKeyController {
         }
     }
 	
+	@PutMapping
+	// 使用範例: /argkey
+	public ApiResponse updateKey(@RequestBody ArgKey argKey) {
+		Boolean result = argKeyService.update(argKey);
+		if (result) {
+			return new ApiResponse(true, "更新成功", result);
+		} else {
+			return new ApiResponse(false, "更新失敗", result);
+		}
+	}
 }
