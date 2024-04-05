@@ -43,7 +43,7 @@ public class ArgKeyController {
 	
 	@PutMapping
 	// 使用範例: /argkey
-	public ApiResponse updateKey(@RequestBody ArgKey argKey) {
+	public ApiResponse update(@RequestBody ArgKey argKey) {
 		Boolean result = argKeyService.update(argKey);
 		if (result) {
 			return new ApiResponse(true, "更新成功", result);
