@@ -3,6 +3,7 @@ package com.hs.rest.key.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hs.rest.key.model.response.ApiResponse;
@@ -16,7 +17,8 @@ public class ArgKeyController {
 	private ArgKeyService argKeyService;
 	
 	@GetMapping("/check")
-	public ApiResponse checkKey(String key) {
+	// 使用範例: /argkey/check?key=abc123
+	public ApiResponse checkKey(@RequestParam("key") String key) {
 		Boolean result = argKeyService.checkKey(key);
 		if (result) {
         	return new ApiResponse(true, "驗證成功", result);
