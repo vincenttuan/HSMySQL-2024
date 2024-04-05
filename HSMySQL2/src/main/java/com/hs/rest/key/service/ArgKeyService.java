@@ -30,5 +30,12 @@ public class ArgKeyService {
 		return argKeyRepository.update(argKey);
 	}
 	
+	public Boolean updateKey(String newKey) {
+		if (newKey == null || newKey.isEmpty()) {
+			return false;
+		}
+		return argKeyRepository.updateKey(newKey);
+	}
+	
 	
 }
