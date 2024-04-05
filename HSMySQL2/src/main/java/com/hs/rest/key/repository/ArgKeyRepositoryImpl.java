@@ -24,8 +24,10 @@ public class ArgKeyRepositoryImpl implements ArgKeyRepository {
 
 	@Override
 	public ArgKey getArgKey() {
-		// TODO Auto-generated method stub
-		return null;
+		Integer id = ArgKey.id;
+		String sql = "select id, name, str_arg1, memo from args where id = ?";
+		ArgKey argKey = jdbcTemplate.queryForObject(sql, ArgKey.class, id);
+		return argKey;
 	}
 
 	@Override
