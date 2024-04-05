@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hs.rest.key.model.po.ArgKey;
 import com.hs.rest.key.model.response.ApiResponse;
 import com.hs.rest.key.service.ArgKeyService;
 
@@ -27,6 +28,15 @@ public class ArgKeyController {
 		}
 	}
 	
-	
+	@GetMapping
+	// 使用範例: /argkey
+	public ApiResponse getKey() {
+		ArgKey argKey = argKeyService.getArgKey();
+        if (argKey != null) {
+            return new ApiResponse(true, "取得成功", argKey);
+        } else {
+            return new ApiResponse(false, "取得失敗", argKey);
+        }
+    }
 	
 }
