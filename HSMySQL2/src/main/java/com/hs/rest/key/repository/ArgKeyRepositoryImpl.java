@@ -1,6 +1,7 @@
 package com.hs.rest.key.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -26,7 +27,8 @@ public class ArgKeyRepositoryImpl implements ArgKeyRepository {
 	public ArgKey getArgKey() {
 		Integer id = ArgKey.id;
 		String sql = "select id, name, str_arg1, memo from args where id = ?";
-		ArgKey argKey = jdbcTemplate.queryForObject(sql, ArgKey.class, id);
+		//ArgKey argKey = jdbcTemplate.queryForObject(sql, ArgKey.class, id);
+		ArgKey argKey = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(ArgKey.class), id);
 		return argKey;
 	}
 
