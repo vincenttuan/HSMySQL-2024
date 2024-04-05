@@ -2,6 +2,7 @@ package com.hs.rest.key.model.po;
 
 import lombok.Data;
 
+// 資料表	：args
 // 使用方式 ?key=abc123 給特殊權限的人使用,每次使用必須更新
 // id 一率都是 7
 // id, name, strArg1, memo
