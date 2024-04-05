@@ -16,7 +16,7 @@ public class ArgKeyRepositoryImpl implements ArgKeyRepository {
 	@Override
 	public Boolean checkKey(String key) {
 		Integer id = ArgKey.id;
-		String sql = "select count(*) from args where strArg1 = ? and id = ?";
+		String sql = "select count(*) from args where str_arg1 = ? and id = ?";
 		// 比對 key 是否正確
 		Integer count = jdbcTemplate.queryForObject(sql, Integer.class, key, id);
 		return count > 0;
