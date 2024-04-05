@@ -8,7 +8,7 @@ import lombok.Data;
 // id, name, strArg1, memo
 @Data
 public class ArgKey {
-    private final Integer id = 7; // 固定值(表示:登入首頁權限密鑰)
+    public static final Integer id = 7; // 固定值(表示:登入首頁權限密鑰)
     private String name;
     private String strArg1; // 放 key 內容
     private String memo;
