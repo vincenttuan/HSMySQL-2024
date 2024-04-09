@@ -10,10 +10,10 @@
 %>
 <html>
     <head>
-    	<!--
-    	<script src="../../js/gps.js?<%=new Random().nextInt(100000) %>" />
-    	-->
-    	<script src="../../js/argskey.js?<%=new Random().nextInt(100000) %>" />
+    	<script src="../../js/checkargskey.js?<%=new Random().nextInt(100000) %>" />
+    	<script src="../../js/checkgps.js?<%=new Random().nextInt(100000) %>" />
+        <script src="../../js/checkflow.js?<%=new Random().nextInt(100000) %>" />
+        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>HS 員工簽到表 II</title>
         <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css">
