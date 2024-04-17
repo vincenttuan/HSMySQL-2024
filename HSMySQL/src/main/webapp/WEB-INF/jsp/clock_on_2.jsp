@@ -10,8 +10,7 @@
 %>
 <html>
     <head>
-    	<script src="../../js/checkflow.js?<%=new Random().nextInt(100000) %>" />
-        
+    	
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>HS 員工簽到表 II</title>
         <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css">
@@ -20,12 +19,14 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <!--呼叫ipcheck.jspf確認ip資料-->
         <%--<%@include file="include/ipcheck.jspf" %>--%>
-
+		<script src="../../js/checkflow.js?<%=new Random().nextInt(100000) %>" />
+        
         <script>
         	
         	// 在 empNo 欄位中按下 enter 就可以查詢今日員工簽到時段
             // Window : 放HTML文件(document)的容器
             // 當HTML文件準備好之後所要做的配置
+            
             $(document).ready(function () {
             	
             	
@@ -140,7 +141,7 @@
                 $('#signInBtn').prop("disabled", false);
             }
         </script>
-
+		
     </head>
     <!--<body id="mybody" style="padding: 10px;visibility: hidden">-->
     <body id="mybody" style="padding: 10px;">
