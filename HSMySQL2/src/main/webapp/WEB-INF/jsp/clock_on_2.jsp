@@ -10,9 +10,7 @@
 %>
 <html>
     <head>
-    	<script src="../../js/checkargskey.js?<%=new Random().nextInt(100000) %>" />
-    	<script src="../../js/checkgps.js?<%=new Random().nextInt(100000) %>" />
-        <script src="../../js/checkflow.js?<%=new Random().nextInt(100000) %>" />
+    	<script src="../../js/checkflow.js?<%=new Random().nextInt(100000) %>" />
         
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>HS 員工簽到表 II</title>
@@ -24,11 +22,14 @@
         <%--<%@include file="include/ipcheck.jspf" %>--%>
 
         <script>
-            // 在 empNo 欄位中按下 enter 就可以查詢今日員工簽到時段
+        	
+        	// 在 empNo 欄位中按下 enter 就可以查詢今日員工簽到時段
             // Window : 放HTML文件(document)的容器
             // 當HTML文件準備好之後所要做的配置
             $(document).ready(function () {
-
+            	
+            	
+            	
                 $(window).keydown(function (event) {
                     if (event.keyCode == 13) {
                         // 停止網頁預設的 enter 行為

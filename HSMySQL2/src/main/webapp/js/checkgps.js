@@ -8,7 +8,7 @@ const checkGpsMeter = async() => {
 		// 隱藏網頁
 		document.documentElement.style.display = "none";
 		// 支援Geolocation API
-		navigator.geolocation.getCurrentPosition(function(position) {
+		 navigator.geolocation.getCurrentPosition(async(position) => {
 			// 獲取使用者目前位置的經緯度
 			var userLatitude = position.coords.latitude;
 			var userLongitude = position.coords.longitude;
@@ -23,29 +23,12 @@ const checkGpsMeter = async() => {
 			const url = `/HSMySQL/mvc/gps/findGpsWithinDistance?lng=${userLongitude}&lat=${userLatitude}`;
 			console.log(url);
 			// 使用 fetch 發送請求
-			fetch(url)
-				.then(response => {
-					// 檢查響應是否成功
-					if (response.ok) {
-						return response.json(); // 將響應體解析為 JSON
-					}
-				})
-				.then(apiResponse => {
-					// 處理數據
-					console.log(apiResponse);
-					//const resp = JSON.parse(apiResponse);
-					console.log(apiResponse.status);
-					if (apiResponse.status == 'false' || apiResponse.status == false) {
-						return false;
-					}
-					return true; // GPS 通過
-				})
-				.catch(error => {
-					// 處理錯誤情況
-					console.error('There has been a problem with your fetch operation:', error);
-	
-				});
-	
+			const response = await fetch(url);    // 送出 request 並取得 response
+			const result = await response.json(); // 將 response 轉 json
+			console.log("gps result=" + result);
+			// 取得 status
+			const status = result.status;	
+			globalCheckGpsMeterStatus = status;
 		}, function(error) {
 			// 錯誤回調函數
 			console.error("Error Code = " + error.code + " - " + error.message);
@@ -60,5 +43,4 @@ const checkGpsMeter = async() => {
 	}
 	return false;
 };
-
 

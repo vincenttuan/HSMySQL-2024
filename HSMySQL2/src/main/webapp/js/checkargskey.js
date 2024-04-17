@@ -16,6 +16,7 @@ const checkArgsKey = async() => {
 		// 取得 status
 		const status = result.status;
 		console.log("status=" + status);
+		globalCheckArgsKeyStatus = status;
 		return status;
 	} catch (e) {
 		console.log("No key");
